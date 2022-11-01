@@ -7,8 +7,16 @@ import reducers from './reducers';
 import NewTimer from './components/NewTimer'
 import ListTimers from './ListTimers'
 import { update } from "./actions";
+import { loadState, saveState } from "../src/utils/index";
+import throttle from "lodash/throttle";
 
-const store = createStore(reducers);
+const persistedState = loadState()
+const store = createStore(reducers, persistedState)
+store.subscribe(
+  throttle(() => {
+    saveState(store.getState());
+  }, 1000)
+);
 
 let lastUpdateTime = Date.now()
 setInterval(() => {
