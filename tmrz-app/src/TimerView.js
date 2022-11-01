@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 // Import our toggleTimer action
 import { toggleTimer } from '../src/actions/index'
 import "./TimerView.css";
+import { formatTime } from "../src/utils/index";
 
 export default function TimerView(props) {
   // Extract these specific props to use in the component
@@ -10,14 +11,12 @@ export default function TimerView(props) {
   const dispatch = useDispatch()
 
   return (
-    <div className='TimerView'>
+    <div className="TimerView">
       <h2>{timer.name}</h2>
-      <h1>{timer.time}</h1>
-      <button
-        onClick={() => dispatch(toggleTimer(index))}
-      >
+      <h1>{formatTime(timer.time)}</h1>
+      <button onClick={() => dispatch(toggleTimer(index))}>
         {timer.isRunning ? "Stop" : "Start"}
       </button>
     </div>
-  )
+  );
 }
